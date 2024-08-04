@@ -16,7 +16,13 @@ class Tree
     pretty_print(node: node.left, prefix: "#{prefix}#{is_left ? '    ' : '│   '}", is_left: true) if node.left
   end
 
+  def insert(value)
+    self.root = bst_insert(root, value)
+  end
+
   private
+
+  attr_writer :root
 
   def build_tree(array)
     sorted_set = array.sort.uniq
@@ -34,5 +40,14 @@ class Tree
     node.right = array_to_balanced_bst(array, middle_idx + 1, last_idx)
 
     node
+  end
+
+  def bst_insert(root, value)
+    return Node.new(data: value) if root.nil?
+
+    root.left = bst_insert(root.left, value) if value < root.data
+    root.right = bst_insert(root.right, value) if value > root.data
+
+    root
   end
 end
