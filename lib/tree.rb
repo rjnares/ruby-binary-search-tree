@@ -20,6 +20,10 @@ class Tree
     self.root = bst_insert(root, value)
   end
 
+  def delete(value)
+    self.root = bst_delete(root, value)
+  end
+
   private
 
   attr_writer :root
@@ -49,5 +53,30 @@ class Tree
     root.right = bst_insert(root.right, value) if value > root.data
 
     root
+  end
+
+  def bst_delete(root, value)
+    return nil if root.nil?
+
+    if value < root.data
+      root.left = bst_delete(root.left, value)
+    elsif value > root.data
+      root.right = bst_delete(root.right, value)
+    else
+      return root.right if root.left.nil?
+      return root.left if root.right.nil?
+
+      successor = successor(root)
+      root.data = successor.data
+      root.right = bst_delete(root.right, successor.data)
+    end
+
+    root
+  end
+
+  def successor(root)
+    current = root.right
+    current = current.left until current.nil? || current.left.nil?
+    current
   end
 end
