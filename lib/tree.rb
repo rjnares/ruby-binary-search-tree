@@ -28,6 +28,14 @@ class Tree
     find_node(root, value)
   end
 
+  def level_order(&block)
+    if block_given?
+      level_order_traversal(root, &block)
+    else
+      level_order_values(root)
+    end
+  end
+
   private
 
   attr_writer :root
@@ -93,5 +101,34 @@ class Tree
     else
       find_node(root.right, value)
     end
+  end
+
+  def level_order_traversal(root, &block)
+    return if root.nil?
+
+    queue = [root]
+
+    until queue.empty?
+      node = queue.shift
+      block.call(node)
+      queue << node.left unless node.left.nil?
+      queue << node.right unless node.right.nil?
+    end
+  end
+
+  def level_order_values(root)
+    return [] if root.nil?
+
+    values = []
+    queue = [root]
+
+    until queue.empty?
+      node = queue.shift
+      values << node.data
+      queue << node.left unless node.left.nil?
+      queue << node.right unless node.right.nil?
+    end
+
+    values
   end
 end
