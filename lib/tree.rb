@@ -36,6 +36,16 @@ class Tree
     end
   end
 
+  def inorder(&block)
+    if block_given?
+      inorder_traversal(root, &block)
+    else
+      values = []
+      inorder_values(root, values)
+      values
+    end
+  end
+
   private
 
   attr_writer :root
@@ -130,5 +140,21 @@ class Tree
     end
 
     values
+  end
+
+  def inorder_traversal(root, &block)
+    return if root.nil?
+
+    inorder_traversal(root.left, &block)
+    block.call(root)
+    inorder_traversal(root.right, &block)
+  end
+
+  def inorder_values(root, values)
+    return if root.nil?
+
+    inorder_values(root.left, values)
+    values << root.data
+    inorder_values(root.right, values)
   end
 end
