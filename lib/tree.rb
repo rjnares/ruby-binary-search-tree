@@ -24,6 +24,10 @@ class Tree
     self.root = bst_delete(root, value)
   end
 
+  def find(value)
+    find_node(root, value)
+  end
+
   private
 
   attr_writer :root
@@ -78,5 +82,16 @@ class Tree
     current = root.right
     current = current.left until current.nil? || current.left.nil?
     current
+  end
+
+  def find_node(root, value)
+    return nil if root.nil?
+    return root if value == root.data
+
+    if value < root.data
+      find_node(root.left, value)
+    else
+      find_node(root.right, value)
+    end
   end
 end
