@@ -78,6 +78,10 @@ class Tree
     bst_balanced?(root)
   end
 
+  def rebalance
+    self.root = build_tree(inorder)
+  end
+
   private
 
   attr_writer :root
