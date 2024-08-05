@@ -56,6 +56,16 @@ class Tree
     end
   end
 
+  def postorder(&block)
+    if block_given?
+      postorder_traversal(root, &block)
+    else
+      values = []
+      postorder_values(root, values)
+      values
+    end
+  end
+
   private
 
   attr_writer :root
@@ -182,5 +192,21 @@ class Tree
     values << root.data
     preorder_values(root.left, values)
     preorder_values(root.right, values)
+  end
+
+  def postorder_traversal(root, &block)
+    return if root.nil?
+
+    postorder_traversal(root.left, &block)
+    postorder_traversal(root.right, &block)
+    block.call(root)
+  end
+
+  def postorder_values(root, values)
+    return if root.nil?
+
+    postorder_values(root.left, values)
+    postorder_values(root.right, values)
+    values << root.data
   end
 end
