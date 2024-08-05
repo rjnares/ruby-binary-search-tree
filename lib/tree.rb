@@ -70,6 +70,10 @@ class Tree
     [bst_height(node), 0].max
   end
 
+  def depth(node)
+    bst_depth(root, node)
+  end
+
   private
 
   attr_writer :root
@@ -221,5 +225,15 @@ class Tree
     right_height = bst_height(root.right)
 
     1 + [left_height, right_height].max
+  end
+
+  def bst_depth(root, target)
+    return 0 if root.nil? || target.nil? || root == target
+
+    if target.data < root.data
+      bst_depth(root.left, target) + 1
+    else
+      bst_depth(root.right, target) + 1
+    end
   end
 end
