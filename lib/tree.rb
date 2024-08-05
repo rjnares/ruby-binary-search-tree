@@ -67,7 +67,7 @@ class Tree
   end
 
   def height(node)
-    [bst_height(node), 0].max
+    bst_height(node)
   end
 
   def depth(node)
@@ -219,7 +219,7 @@ class Tree
   end
 
   def bst_height(root)
-    return -1 if root.nil?
+    return 0 if root.nil?
 
     left_height = bst_height(root.left)
     right_height = bst_height(root.right)
