@@ -74,6 +74,10 @@ class Tree
     bst_depth(root, node)
   end
 
+  def balanced?
+    bst_balanced?(root)
+  end
+
   private
 
   attr_writer :root
@@ -235,5 +239,20 @@ class Tree
     else
       bst_depth(root.right, target) + 1
     end
+  end
+
+  def bst_balanced?(root)
+    return true if root.nil?
+
+    left_height = height(root.left)
+    right_height = height(root.right)
+
+    height_balanced = (left_height - right_height).abs < 2
+    left_balanced = bst_balanced?(root.left)
+    right_balanced = bst_balanced?(root.right)
+
+    return true if height_balanced && left_balanced && right_balanced
+
+    false
   end
 end
