@@ -66,6 +66,10 @@ class Tree
     end
   end
 
+  def height(node)
+    [bst_height(node), 0].max
+  end
+
   private
 
   attr_writer :root
@@ -208,5 +212,14 @@ class Tree
     postorder_values(root.left, values)
     postorder_values(root.right, values)
     values << root.data
+  end
+
+  def bst_height(root)
+    return -1 if root.nil?
+
+    left_height = bst_height(root.left)
+    right_height = bst_height(root.right)
+
+    1 + [left_height, right_height].max
   end
 end
